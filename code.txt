@@ -1,0 +1,56 @@
+float c = 0;
+bool y=0;
+int pirin=12;
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(A0, INPUT);
+  pinMode(12,INPUT);
+  pinMode(13, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  analogWrite(7,255);
+}
+
+void loop()
+{ 
+  int x=digitalRead(pirin);
+  if(x==LOW){
+    digitalWrite(4,LOW);
+    y=false;
+  }
+  else{
+    digitalWrite(4,HIGH);
+    y=true;
+  }
+ 
+  c = (analogRead(A0));
+  float volts = (c / 965.0) * 5;  
+   c = (volts - 0.5) * 100;  
+ 
+  Serial.print(c);
+ 
+  Serial.print(" C, ");
+
+
+   if (c < 40 || y==false) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(13, LOW);
+   
+  }
+  
+  if (c > 40 && y==true)
+  {
+    digitalWrite(2, LOW);
+    digitalWrite(3, HIGH);
+    digitalWrite(13,LOW);
+    digitalWrite(8, HIGH);
+    
+  }
+  
+  else
+  delay(10); 
+}
